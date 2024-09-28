@@ -1,120 +1,177 @@
 import argparse
-from models.dog_classifier import DogClassifier
-import torch
 import os
+import random
+from typing import List, Tuple
+
+import matplotlib.pyplot as plt
+import pytorch_lightning as pl
+import torch
+import torch.nn.functional as F
 from PIL import Image
 from torchvision import transforms
-import torch.nn.functional as F
-import matplotlib.pyplot as plt
-import random
 
-def inference(model, image_path):
+from datamodules.dogbreed import DogImageDataModule
+from models.dog_classifier import DogClassifier
 
-    # load image
-    img = Image.open(image_path).convert("RGB")
+# Define class labels
+CLASS_LABELS = [
+    "Beagle",
+    "Boxer",
+    "Bulldog",
+    "Dachshund",
+    "German_Shepherd",
+    "Golden_Retriever",
+    "Labrador_Retriever",
+    "Poodle",
+    "Rottweiler",
+    "Yorkshire_Terrier",
+]
 
-    # define transformations
-    transform = transforms.Compose(
-        [
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ]
-    )
 
-    # now, apply these transformations to an image
-    img_tensor = transform(img).unsqueeze(0)
-    img_tensor = img_tensor.to(model.device)
+def denormalize(tensor, mean, std):
+    # Ensure tensor is on CPU and in the correct shape (C, H, W)
+    tensor = tensor.cpu()
+    if tensor.dim() == 2:
+        tensor = tensor.unsqueeze(0)
+    elif tensor.dim() == 3 and tensor.shape[0] != 3:
+        tensor = tensor.permute(2, 0, 1)
 
-    # set the model in evaluation mode
+    # Reshape mean and std to (C, 1, 1) for broadcasting
+    mean = torch.tensor(mean, dtype=tensor.dtype).view(-1, 1, 1)
+    std = torch.tensor(std, dtype=tensor.dtype).view(-1, 1, 1)
+
+    # Apply denormalization
+    return (tensor * std + mean).clamp(0, 1)
+
+
+def inference(model: pl.LightningModule, img: torch.Tensor) -> Tuple[str, float]:
+    """
+    Perform inference on a given image using a trained model.
+
+    Args:
+        model (pl.LightningModule): Trained PyTorch Lightning model.
+        img (torch.Tensor): Input image tensor.
+
+    Returns:
+        Tuple[str, float]: predicted label, and confidence.
+    """
+
+    # Set the model in evaluation mode
     model.eval()
 
-    # perform inference
+    # Perform inference
     with torch.no_grad():
-        output = model(img_tensor)
-        probabilty = F.softmax(output, dim=1)
-        predicted = torch.argmax(probabilty, dim=1).item()
+        output = model(img)
+        probability = F.softmax(output, dim=1)
+        predicted = torch.argmax(probability, dim=1).item()
 
-    # map the predicted class to label
-    class_labels = [
-        "Beagle",
-        "Boxer",
-        "Bulldog",
-        "Dachshund",
-        "German_Shepherd",
-        "Golden_Retriever",
-        "Labrador_Retriever",
-        "Poodle",
-        "Rottweiler",
-        "Yorkshire_Terrier",
-    ]
-    predicted_label = class_labels[predicted]
-    confidence = probabilty[0][predicted].item()
+    predicted_label = CLASS_LABELS[predicted]
+    confidence = probability[0][predicted].item()
 
-    return img, predicted_label, confidence
+    return predicted_label, confidence
 
 
-def save_prediction(img, actaul_label, predicted_label, confidence, output_path):
+def save_prediction(
+    img: torch.Tensor,
+    actual_label: str,
+    predicted_label: str,
+    confidence: float,
+    output_path: str,
+):
+    """
+    Save an image with actual and predicted labels, along with confidence.
+
+    Args:
+        img (torch.Tensor): The image tensor to be displayed and saved.
+        actual_label (str): The ground truth label of the image.
+        predicted_label (str): The label predicted by the model.
+        confidence (float): The confidence score of the prediction.
+        output_path (str): The path where the image with annotations will be saved.
+    """
+
+    # Denormalize the image
+    img = denormalize(img, mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+
+    # Convert the tensor to numpy array
+    # From (C, H, W) to (H, W, C)
+    img = img.permute(1, 2, 0).numpy()
+
     plt.figure(figsize=(9, 9))
     plt.imshow(img)
     plt.axis("off")
-    plt.title(f"Actual: {actaul_label} | Predicted: {predicted_label} | (Confidence: {confidence:.2f})")
+    plt.title(
+        f"Actual: {actual_label} | Predicted: {predicted_label} | (Confidence: {confidence:.2f})"
+    )
     plt.savefig(output_path)
-    plt.show()
     plt.close()
 
 
 def main(args):
+    """
+    Main function to load a trained model and perform inference on sample images.
 
-    # load model
+    Args:
+        args: Command-line arguments parsed by argparse.
+    """
+
+    # Load model
     model = DogClassifier.load_from_checkpoint(args.ckpt_path)
     model.to("cuda" if torch.cuda.is_available() else "cpu")
 
-    # create a directory for storing predictions if not exists
+    # Create a directory for storing predictions if not exists
     os.makedirs(args.output_folder, exist_ok=True)
 
-    # get list of files
-    files = [
-        f
-        for f in os.listdir(args.input_folder)
-        if f.lower().endswith((".jpg", ".jpeg", ".png"))
-    ]
+    # 1. Initialize the data module
+    data_module = DogImageDataModule(num_workers=2, batch_size=16)
 
-    for file in random.sample(files, min(10, len(files))):
-        image_path = os.path.join(args.input_folder, file)
-        img, predicted_label, confidence = inference(model=model, image_path=image_path)
+    # 2. Set up the data module for validation data
+    data_module.setup(stage="fit")
 
-        # saving the prediction image
+    # 3. Retrieve the validation dataset
+    val_dataset = data_module.val_dataset
+
+    # Get the indices for sampling
+    num_samples = min(args.num_samples, len(val_dataset))  # Limit to available images
+    sampled_indices = random.sample(range(len(val_dataset)), num_samples)
+
+    for idx in sampled_indices:
+        img, label_index = val_dataset[idx]  # Get the image and its label index
+        img_tensor = img.unsqueeze(0).to(model.device)
+
+        # Convert label index to actual label
+        actual_label = CLASS_LABELS[label_index]
+
+        predicted_label, confidence = inference(model, img_tensor)
+
+        # Saving the prediction image
         output_image_path = os.path.join(
-            args.output_folder, f"{os.path.splitext(file)[0]}_prediction.png"
+            args.output_folder, f"sample_{idx}_prediction.png"
         )
 
-        actaul_label = image_path.split("/")[-1].split('_')[0]
-        save_prediction(img, actaul_label, predicted_label, confidence, output_image_path)
+        save_prediction(
+            img, actual_label, predicted_label, confidence, output_image_path
+        )
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Perform inference on images")
-
-    parser.add_argument(
-        "--input_folder",
-        type=str,
-        default="data/test",
-        help="Path to the directory containing input images",
-    )
+    parser = argparse.ArgumentParser(description="Dog Breed Classification Inference")
 
     parser.add_argument(
         "--output_folder",
         type=str,
         default="predictions",
-        help="Path to the directory contaning predictions",
+        help="Path to save prediction images",
     )
 
     parser.add_argument(
         "--ckpt_path",
         type=str,
-        default="checkpoints/dog_breed_classifier_model.ckpt",
+        default="model/dog_breed_classifier_model.ckpt",
         help="path to the model checkpoint",
+    )
+
+    parser.add_argument(
+        "--num_samples", type=int, default=10, help="Number of samples to process"
     )
 
     args = parser.parse_args()

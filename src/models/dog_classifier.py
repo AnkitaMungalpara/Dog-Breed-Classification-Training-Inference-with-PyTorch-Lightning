@@ -1,11 +1,17 @@
 import lightning as L
+import timm
 import torch
 import torch.nn.functional as F
-from torchmetrics import Accuracy, F1Score, MaxMetric, MeanMetric
-import timm
+from torchmetrics import Accuracy, MaxMetric, MeanMetric
 
 
 class DogClassifier(L.LightningModule):
+    """
+    DogClassifier module using a pre-trained ResNet-18 model for multiclass dog breed classification.
+    Tracks and reports loss and accuracy metrics for training, validation, and testing.
+
+    """
+
     def __init__(self, lr: float = 1e-3):
         super().__init__()
         self.lr = lr

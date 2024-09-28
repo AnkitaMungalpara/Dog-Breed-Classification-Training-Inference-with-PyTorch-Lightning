@@ -1,19 +1,25 @@
-from typing import Union
-import lightning as L
+import os
+import shutil
 from pathlib import Path
-from torchvision.datasets.utils import download_and_extract_archive
-from torchvision.datasets import ImageFolder
+from typing import Union
+from zipfile import ZipFile
+
+import gdown
+import lightning as L
+from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader
 from torchvision import transforms
-import gdown
-from zipfile import ZipFile
-import os
-from sklearn.model_selection import train_test_split
-
-import shutil
+from torchvision.datasets import ImageFolder
 
 
 class DogImageDataModule(L.LightningModule):
+    """
+    A PyTorch Lightning DataModule for loading and preparing dog breed images
+    for training, validation, and testing. This module manages the datasets
+    and handles the dataloader configurations like batch size and number of workers.
+
+    """
+
     def __init__(
         self,
         data_dir: Union[str, Path] = "data",
@@ -81,8 +87,6 @@ class DogImageDataModule(L.LightningModule):
 
                     for file in test:
                         shutil.move(str(file), str(class_test))
-
-                    # class_dir.unlink()
 
     def setup(self, stage: str):
 
