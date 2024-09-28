@@ -33,18 +33,8 @@ The project requires the following packages to be installed:
 
 ## Dataset 📂
 
-The dataset used for this project is the [Dog Breed Image Dataset](https://www.kaggle.com/datasets/khushikhushikhushi/dog-breed-image-dataset). This dataset consists of images for 10 dog breeds, organized for computer vision tasks like image classification. The breeds included are:
+The dataset used for this project is the [Dog Breed Image Dataset](https://www.kaggle.com/datasets/khushikhushikhushi/dog-breed-image-dataset). This dataset consists of images for 10 dog breeds, organized for computer vision tasks like image classification. The breeds included are: 👇
 
-- Golden Retriever
-- German Shepherd
-- Labrador Retriever
-- Bulldog
-- Beagle
-- Poodle
-- Rottweiler
-- Yorkshire Terrier
-- Boxer
-- Dachshund
 
 <table>
   <tr>
@@ -85,11 +75,11 @@ PyTorch Lightning is a lightweight wrapper around PyTorch that simplifies the pr
 
 ### Why PyTorch Lightning?
 
-- **Simplified Code Structure:** By separating the research code from engineering concerns, it encourages clean and organized code, making it easier to maintain and scale.
+✅ **Simplified Code Structure:** By separating the research code from engineering concerns, it encourages clean and organized code, making it easier to maintain and scale.
 
-- **Flexibility:** It provides an easy way to switch between different training strategies (like multi-GPU training, TPU support, etc.) with minimal changes to the codebase.
+✅ **Flexibility:** It provides an easy way to switch between different training strategies (like multi-GPU training, TPU support, etc.) with minimal changes to the codebase.
 
-- **Built-in Features:** Lightning includes built-in logging, checkpointing, and early stopping mechanisms, reducing the need for manual implementations.
+✅ **Built-in Features:** Lightning includes built-in logging, checkpointing, and early stopping mechanisms, reducing the need for manual implementations.
 
 
 ## Docker Setup 🐳
@@ -160,7 +150,7 @@ volumes:
 
 To set up and execute the training, evaluation, and inference processes, follow these steps:
 
-1. **Build Docker Images**: 
+1️⃣ **Build Docker Images**: 
 
 - First, build the Docker images for all services using the following command:
 
@@ -170,7 +160,7 @@ To set up and execute the training, evaluation, and inference processes, follow 
 
 - This command prepares the environment by ensuring that all necessary dependencies are installed and the code is packaged correctly.
 
-2. **Train the Model**: 
+2️⃣ **Train the Model**: 
 
 - To train the model, run:
 
@@ -180,7 +170,7 @@ To set up and execute the training, evaluation, and inference processes, follow 
 
 - This command utilizes the Lightning `DogClassifier` to train the model and saves the checkpoints to the shared volume.
 
-3. **Evaluate the Model**: 
+3️⃣ **Evaluate the Model**: 
 
 - To evaluate the model using the saved checkpoint, execute:
 
@@ -208,16 +198,14 @@ Check the results of the predictions in the `predictions` folder, where the outp
 
 <table>
   <tr>
-    <td><img src="predictions/sample_12_prediction.png" alt="Original Image 1" width="200"/></td>
-    <td><img src="predictions/sample_14_prediction.png" alt="Predicted Image 1" width="200"/><br>Golden Retriever</td>
+    <td><img src="predictions/sample_12_prediction.png" alt="Actual: Beagle | Predicted: Beagle | (Confidence: 1.00)" width="25%"/></td>
+    <td><img src="predictions/sample_14_prediction.png" alt="Actual: Beagle | Predicted: Beagle | (Confidence: 1.00)" width="25%"/></td>
+    <td><img src="predictions/sample_49_prediction.png" alt="Actual: Bulldog | Predicted: Bulldog | (Confidence: 0.99)" width="25%"/></td>
+    <td><img src="predictions/sample_58_prediction.png" alt="Actual: Bulldog | Predicted: Bulldog | (Confidence: 1.00)" width="25%"/></td>
   </tr>
   <tr>
-    <td><img src="predictions/sample_49_prediction.png" alt="Original Image 2" width="200"/></td>
-    <td><img src="predictions/sample_58_prediction.png" alt="Predicted Image 2" width="200"/><br>German Shepherd</td>
-  </tr>
-  <tr>
-    <td><img src="predictions/sample_71_prediction.png" alt="Original Image 3" width="200"/></td>
-    <td><img src="predictions/sample_82_prediction.png" alt="Predicted Image 3" width="200"/><br>Labrador Retriever</td>
+    <td><img src="predictions/sample_71_prediction.png" alt="Actual: Dachshund | Predicted: Dachshund | (Confidence: 1.00)" width="50%"/></td>
+    <td><img src="predictions/sample_82_prediction.png" alt="Actual: German_Shepherd | Predicted: German_Shepherd | (Confidence: 1.00)" width="50%"/></td>
   </tr>
 </table>
 
