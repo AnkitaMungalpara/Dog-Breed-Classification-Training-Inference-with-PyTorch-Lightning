@@ -1,7 +1,7 @@
 
-# 🐶 Dog Breed Classification with Docker Compose and PyTorch Lightning 🐳⚡
+# Dog Breed 🐶 Classification with Docker Compose 🐳 and PyTorch Lightning ⚡ 
 
-This project demonstrates how to set up training, evaluation, and inference for dog breed classification using Docker and PyTorch Lightning. The project uses Docker containers for environment consistency and PyTorch Lightning for modular training, evaluation, and inference. It leverages the Kaggle Dog Breed dataset, orchestrated using Docker Compose.
+This project demonstrates how to set up training, evaluation, and inference for dog breed classification using Docker and PyTorch Lightning. The project uses Docker containers for environment consistency and [PyTorch Lightning](https://lightning.ai/docs/pytorch/stable/) for modular training, evaluation, and inference. It utilizes the [Kaggle Dog Breed dataset](https://www.kaggle.com/datasets/khushikhushikhushi/dog-breed-image-dataset), managed using Docker Compose.
 
 ## Table of Contents
 - [Requirements](#Requirements-)
@@ -18,6 +18,8 @@ This project demonstrates how to set up training, evaluation, and inference for 
 - [References](#references-)
 
 ## Requirements 📦
+
+The project requires the following packages to be installed:
 
 - `PyTorch`
 - `torchvision`
@@ -44,6 +46,37 @@ The dataset used for this project is the [Dog Breed Image Dataset](https://www.k
 - Boxer
 - Dachshund
 
+<table>
+  <tr>
+    <td><b>Golden Retriever</b></td>
+    <td><b>German Shepherd</b></td>
+    <td><b>Labrador Retriever</b></td>
+    <td><b>Bulldog</b></td>
+    <td><b>Beagle</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/class_images/Golden Retriever.jpg" alt="Golden Retriever" width="200"/></td>
+    <td><img src="data/class_images/German Shepherd.jpg" alt="German Shepherd" width="200"/></td>
+    <td><img src="data/class_images/Labrador Retriever.jpg" alt="Labrador Retriever" width="200"/></td>
+    <td><img src="data/class_images/Bulldog.jpg" alt="Bulldog" width="200"/></td>
+    <td><img src="data/class_images/Beagle.jpg" alt="Beagle" width="200"/></td>
+  </tr>
+  <tr>
+    <td><b>Poodle</b></td>
+    <td><b>Rottweiler</b></td>
+    <td><b>Yorkshire Terrier</b></td>
+    <td><b>Boxer</b></td>
+    <td><b>Dachshund</b></td>
+  </tr>
+  <tr>
+    <td><img src="data/class_images/Poodle.jpg" alt="Poodle" width="200"/></td>
+    <td><img src="data/class_images/Rottweiler.jpg" alt="Rottweiler" width="200"/></td>
+    <td><img src="data/class_images/Yorkshire Terrier.jpg" alt="Yorkshire Terrier" width="200"/></td>
+    <td><img src="data/class_images/Boxer.jpg" alt="Boxer" width="200"/></td>
+    <td><img src="data/class_images/Dachshund.jpg" alt="Dachshund" width="200"/></td>
+  </tr>
+</table>
+
 Each breed has 100 images stored in separate directories, ensuring diversity and relevance for effective training and evaluation of machine learning models.
 
 ## PyTorch Lightning Module ⚡
@@ -52,11 +85,11 @@ PyTorch Lightning is a lightweight wrapper around PyTorch that simplifies the pr
 
 ### Why PyTorch Lightning?
 
-- Simplified Code Structure: By separating the research code from engineering concerns, it encourages clean and organized code, making it easier to maintain and scale.
+- **Simplified Code Structure:** By separating the research code from engineering concerns, it encourages clean and organized code, making it easier to maintain and scale.
 
-- Flexibility: It provides an easy way to switch between different training strategies (like multi-GPU training, TPU support, etc.) with minimal changes to the codebase.
+- **Flexibility:** It provides an easy way to switch between different training strategies (like multi-GPU training, TPU support, etc.) with minimal changes to the codebase.
 
-- Built-in Features: Lightning includes built-in logging, checkpointing, and early stopping mechanisms, reducing the need for manual implementations.
+- **Built-in Features:** Lightning includes built-in logging, checkpointing, and early stopping mechanisms, reducing the need for manual implementations.
 
 
 ## Docker Setup 🐳
@@ -171,7 +204,23 @@ One thing to note here is that Each service employs **volume mounts** to ensure 
 
 ## Results 📊
 
-Check the results of the predictions in the `predictions` folder, where the output images with predicted labels will be saved after running the inference.
+Check the results of the predictions in the `predictions` folder, where the output images with predicted labels will be saved after running the inference. Below are some sample prediction results:
+
+<table>
+  <tr>
+    <td><img src="predictions/sample_12_prediction.png" alt="Original Image 1" width="200"/></td>
+    <td><img src="predictions/sample_14_prediction.png" alt="Predicted Image 1" width="200"/><br>Golden Retriever</td>
+  </tr>
+  <tr>
+    <td><img src="predictions/sample_49_prediction.png" alt="Original Image 2" width="200"/></td>
+    <td><img src="predictions/sample_58_prediction.png" alt="Predicted Image 2" width="200"/><br>German Shepherd</td>
+  </tr>
+  <tr>
+    <td><img src="predictions/sample_71_prediction.png" alt="Original Image 3" width="200"/></td>
+    <td><img src="predictions/sample_82_prediction.png" alt="Predicted Image 3" width="200"/><br>Labrador Retriever</td>
+  </tr>
+</table>
+
 
 ## References 🔗
 
@@ -179,4 +228,3 @@ Check the results of the predictions in the `predictions` folder, where the outp
 - [PyTorch](https://pytorch.org/)
 - [PyTorch Lightning](https://www.pytorchlightning.ai/)
 - [Docker Documentation](https://docs.docker.com/)
-
