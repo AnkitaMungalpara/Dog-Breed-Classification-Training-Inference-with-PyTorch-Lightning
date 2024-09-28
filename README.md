@@ -38,18 +38,18 @@ The dataset used for this project is the [Dog Breed Image Dataset](https://www.k
 
 <table>
   <tr>
-    <td><img src="data/class_images/Golden Retriever.jpg" alt="Golden Retriever" width="200"/><b>Golden Retriever</b></td>
-    <td><img src="data/class_images/German Shepherd.jpg" alt="German Shepherd" width="200"/><b>German Shepherd</b></td>
-    <td><img src="data/class_images/Labrador Retriever.jpg" alt="Labrador Retriever" width="200"/><b>Labrador Retriever</b></td>
-    <td><img src="data/class_images/Bulldog.jpg" alt="Bulldog" width="200"/><b>Bulldog</b></td>
-    <td><img src="data/class_images/Beagle.jpg" alt="Beagle" width="200"/><b>Beagle</b></td>
+    <td><img src="data/class_images/Golden Retriever.jpg" alt="Golden Retriever" width="100%"/><b>Golden Retriever</b></td>
+    <td><img src="data/class_images/German Shepherd.jpg" alt="German Shepherd" width="100%"/><b>German Shepherd</b></td>
+    <td><img src="data/class_images/Labrador Retriever.jpg" alt="Labrador Retriever" width="100%"/><b>Labrador Retriever</b></td>
+    <td><img src="data/class_images/Bulldog.jpg" alt="Bulldog" width="100%"/><b>Bulldog</b></td>
+    <td><img src="data/class_images/Beagle.jpg" alt="Beagle" width="100%"/><b>Beagle</b></td>
   </tr>
   <tr>
-    <td><img src="data/class_images/Poodle.jpg" alt="Poodle" width="200"/><b>Poodle</b></td>
-    <td><img src="data/class_images/Rottweiler.jpg" alt="Rottweiler" width="200"/><b>Rottweiler</b></td>
-    <td><img src="data/class_images/Yorkshire Terrier.jpg" alt="Yorkshire Terrier" width="200"/><b>Yorkshire Terrier</b></td>
-    <td><img src="data/class_images/Boxer.jpg" alt="Boxer" width="200"/><b>Boxer</b></td>
-    <td><img src="data/class_images/Dachshund.jpg" alt="Dachshund" width="200"/><b>Dachshund</b></td>
+    <td><img src="data/class_images/Poodle.jpg" alt="Poodle" width="100%"/><b>Poodle</b></td>
+    <td><img src="data/class_images/Rottweiler.jpg" alt="Rottweiler" width="100%"/><b>Rottweiler</b></td>
+    <td><img src="data/class_images/Yorkshire Terrier.jpg" alt="Yorkshire Terrier" width="100%"/><b>Yorkshire Terrier</b></td>
+    <td><img src="data/class_images/Boxer.jpg" alt="Boxer" width="100%"/><b>Boxer</b></td>
+    <td><img src="data/class_images/Dachshund.jpg" alt="Dachshund" width="100%"/><b>Dachshund</b></td>
   </tr>
 </table>
 
@@ -185,15 +185,19 @@ Check the results of the predictions in the `predictions` folder, where the outp
 <table>
   <tr>
     <td><img src="predictions/sample_12_prediction.png" alt="Actual: Beagle | Predicted: Beagle | (Confidence: 1.00)" width="100%"/><br>Actual: Beagle <br> Predicted: Beagle <br> (Confidence: 1.00)</td>
-    <td><img src="predictions/sample_14_prediction.png" alt="Actual: Beagle | Predicted: Beagle | (Confidence: 1.00)" width="100%"/><br>Actual: Beagle | Predicted: Beagle | (Confidence: 1.00)</td>
-    <td><img src="predictions/sample_49_prediction.png" alt="Actual: Bulldog | Predicted: Bulldog | (Confidence: 0.99)" width="100%"/><br>Actual: Bulldog | Predicted: Bulldog | (Confidence: 0.99)</td>
-    <td><img src="predictions/sample_58_prediction.png" alt="Actual: Bulldog | Predicted: Bulldog | (Confidence: 1.00)" width="100%"/><br>Actual: Bulldog | Predicted: Bulldog | (Confidence: 1.00)</td>
+    <td><img src="predictions/sample_14_prediction.png" alt="Actual: Beagle | Predicted: Beagle | (Confidence: 1.00)" width="100%"/><br>Actual: Beagle <br> Predicted: Beagle <br> (Confidence: 1.00)</td>
   </tr>
   <tr>
-    <td><img src="predictions/sample_71_prediction.png" alt="Actual: Dachshund | Predicted: Dachshund | (Confidence: 1.00)" width="100%"/><br>Actual: Dachshund | Predicted: Dachshund | (Confidence: 1.00)</td>
-    <td><img src="predictions/sample_82_prediction.png" alt="Actual: German_Shepherd | Predicted: German_Shepherd | (Confidence: 1.00)" width="100%"/><br>ctual: German_Shepherd | Predicted: German_Shepherd | (Confidence: 1.00)</td>
-    <td><img src="predictions/sample_110_prediction.png" alt="Actual: Golden_Retriever | Predicted: Golden _Retriever | (Confidence: 1.00)" width="100%"/><br>Actual: Golden_Retriever | Predicted: Golden _Retriever | (Confidence: 1.00)</td>
-    <td><img src="predictions/sample_144_prediction.png" alt="Actual: Poodle | Predicted: Poodle | (Confidence: 1.00)" width="100%"/><br>Actual: Poodle | Predicted: Poodle | (Confidence: 1.00)</td>
+    <td><img src="predictions/sample_49_prediction.png" alt="Actual: Bulldog | Predicted: Bulldog | (Confidence: 0.99)" width="100%"/><br>Actual: Bulldog <br> Predicted: Bulldog <br> (Confidence: 0.99)</td>
+    <td><img src="predictions/sample_58_prediction.png" alt="Actual: Bulldog | Predicted: Bulldog | (Confidence: 1.00)" width="100%"/><br>Actual: Bulldog <br> Predicted: Bulldog <br> (Confidence: 1.00)</td>
+  </tr>
+  <tr>
+    <td><img src="predictions/sample_71_prediction.png" alt="Actual: Dachshund | Predicted: Dachshund | (Confidence: 1.00)" width="100%"/><br>Actual: Dachshund <br> Predicted: Dachshund <br> (Confidence: 1.00)</td>
+    <td><img src="predictions/sample_82_prediction.png" alt="Actual: German_Shepherd | Predicted: German_Shepherd | (Confidence: 1.00)" width="100%"/><br>ctual: German_Shepherd <br> Predicted: German_Shepherd <br> (Confidence: 1.00)</td>
+  </tr>
+  <tr>
+    <td><img src="predictions/sample_110_prediction.png" alt="Actual: Golden_Retriever | Predicted: Golden _Retriever | (Confidence: 1.00)" width="100%"/><br>Actual: Golden_Retriever <br> Predicted: Golden _Retriever <br> (Confidence: 1.00)</td>
+    <td><img src="predictions/sample_144_prediction.png" alt="Actual: Poodle | Predicted: Poodle | (Confidence: 1.00)" width="100%"/><br>Actual: Poodle <br> Predicted: Poodle <br> (Confidence: 1.00)</td>
   </tr>
 </table>
 
